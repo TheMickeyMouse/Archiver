@@ -56,8 +56,13 @@ namespace Quasi {
         // TODO: like no duplicate names (not considering _, -, +, ...)
 
         // write files to an object file
+#ifdef _WIN32
+#define CMD_MOVE "move"
+#else
+#define CMD_MOVE "mv"
+#endif
         String inputFiles = String::Join(filenames.Iter().Map([] (Str f) { return f.Contains(' ') ? Text::Quote(f) : String(f); }), " ");
-        String command = Text::Format("cd {0} && ld -r -b binary -o {1} {2} && move {1} {3}",
+        String command = Text::Format("cd {0} && ld -r -b binary -o {1} {2} && " CMD_MOVE " {1} {3}",
             resDir, archiveName, inputFiles, curDir);
         Debug::QDebug$("running {}", command);
         command.AddNullTerm();
