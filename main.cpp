@@ -69,6 +69,13 @@ int main(int argc, char* argv[]) {
         args.Push(argv[i]);
     }
 
+    if (args.IsEmpty()) {
+        std::cout << "archive: no inputs specified\n";
+        TryHelp();
+        return 1;
+    }
+
+
     struct File {
         FILE* f = nullptr;
         ~File() { if (f) std::fclose(f); }
