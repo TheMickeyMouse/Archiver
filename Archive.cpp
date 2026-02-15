@@ -37,6 +37,13 @@ namespace Quasi {
         }
     }
 
+    void Archive::WriteVariableName(Str name, Text::StringWriter dest) {
+        if (!name.IsEmpty() && !Chr::IsAlpha(name[0])) {
+            dest.Write('_'); // prevents variables that start with '1' or stuff
+        }
+        dest.Write(name);
+    }
+
     bool Archive::CheckReq() {
 #ifdef _WIN32
 #define CHECK_CMD_EXISTS(COMMAND) "where " COMMAND " > nul 2>&1"
@@ -77,15 +84,16 @@ namespace Quasi {
         dest << "namespace _ar {\n    extern char ";
         for (usize i = 0; i < mangledNames.Length(); i++) {
             const String& mname = mangledNames[i];
-            dest << mname << "_s[] asm(\"_binary_" << mname << "_start\"), ";
-            dest << mname << "_e[] asm(\"_binary_" << mname << "_end\")";
+            WriteVariableName(mname, dest); dest << "_s[] asm(\"_binary_" << mname << "_start\"), ";
+            WriteVariableName(mname, dest); dest << "_e[] asm(\"_binary_" << mname << "_end\")";
             if (i < mangledNames.Length() - 1) {
                 dest << ", ";
             }
         }
         dest << ";\n    static constexpr const char* data_ptrs[] = {";
         for (usize i = 0; i < mangledNames.Length(); i++) {
-            dest << mangledNames[i] << "_s, " << mangledNames[i] << "_e, ";
+            WriteVariableName(mangledNames[i], dest); dest << "_s, ";
+            WriteVariableName(mangledNames[i], dest); dest << "_e, ";
         }
         dest << "}, *names[] = {\"";
         for (usize i = 0; i < mangledNames.Length(); i++) {

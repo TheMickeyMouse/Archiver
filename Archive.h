@@ -21,6 +21,7 @@ namespace Quasi {
 
     private:
         static void WriteMangledName(Str name, Text::StringWriter dest);
+        static void WriteVariableName(Str name, Text::StringWriter dest);
     public:
         static bool CheckReq();
         static void ArchiveFiles(Span<Str> filenames, Str resDir, Str curDir, Str archiveName, Text::StringWriter dest);
