@@ -21,10 +21,11 @@ int main(int argc, char* argv[]) {
                 std::cout << "usage: archive [options] files...\n"
                              " Options:\n"
                              "  -o OUTPUT_FILE              Exports the archive object file to OUTPUT_FILE.\n"
-                             "  -i BUILD_INCLUDE_FILE       Exports the archive header file to BUILD_INCLUDE_FILE. \n"
+                             "  -f BUILD_INCLUDE_FILE       Exports the archive header file to BUILD_INCLUDE_FILE. \n"
                              "                              By default prints to the console. \n"
                              "  -r RESOURCE_DIR             Tells archive where to search for the resource files. \n"
-                             "  -h / --help                 Shows this screen.\n";
+                             "  -h / --help                 Shows this screen.\n"
+                             "For additional usage and instructions, see https://github.com/TheMickeyMouse/Archiver.";
                 return 0;
             } else {
                 TryHelp();
@@ -46,7 +47,7 @@ int main(int argc, char* argv[]) {
             ++i;
             continue;
         }
-        if (s == "-i") {
+        if (s == "-f") {
             buildIncludeFile = Str(argv[i + 1]);
             ++i;
             continue;
