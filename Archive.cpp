@@ -11,7 +11,7 @@ namespace Quasi {
         return arch;
     }
 
-    Archive Archive::FromPtrs(const char* startEndPairs[], const char* names[], usize numArgs) {
+    Archive Archive::FromPtrs(const char* const startEndPairs[], const char* const names[], usize numArgs) {
         Archive archive;
         const u8* dataStart = (const u8*)startEndPairs[0], *dataEnd = (const u8*)startEndPairs[2 * numArgs - 1];
         for (usize i = 0; i < numArgs; i++) {
