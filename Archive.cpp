@@ -95,9 +95,9 @@ namespace Quasi {
             WriteVariableName(mangledNames[i], dest); dest << "_s, ";
             WriteVariableName(mangledNames[i], dest); dest << "_e, ";
         }
-        dest << "}, *names[] = {\"";
+        dest << "}, *names[] = {";
         for (usize i = 0; i < mangledNames.Length(); i++) {
-            dest << filenames[i] << "\", ";
+            dest << '\"' << filenames[i] << "\", ";
         }
         dest << "};\n}\n";
 
