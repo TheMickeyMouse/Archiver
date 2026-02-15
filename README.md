@@ -1,30 +1,20 @@
-\# Archiver
+# Archiver
 
-Archiver is a CLI tool that helps programs embed external data into their applications, such as images or shader code. 
-
+Archiver is a CLI tool that helps programs embed external data into their applications, such as images or shader code.
 While most tools use things like `xxd` to export raw data into C-compatible byte data, Archiver does this by directly embedding the binary data into the application itself,
-
-greatly reducing the data processing and bloat that is added on top when using `xxd`, which requires the source file and compiler to read through ~5x the amount of memory.
-
-
-
-
+greatly reducing the data processing and bloat that is added on top when using `xxd`, which requires the source file and compiler to read through + verify ~5x the amount of memory.
 
 Archiver does this by attaching files to the data section in the assembly, with little overhead. 
 
-While Archiver does not physically do any of the building \& compiling, it does manage the object file generation and data retrieval.
+While Archiver does not physically do any of the building & compiling, it does manage the object file generation and data retrieval.
 
+## Requirements
 
+- `ld` (GNU Linker) - required to turn files into object files. Other linkers are not yet supported. You can install `ld` by installing the MinGW compiler suite.
 
-\## Requirements
+- `g++`/`gcc`/`clang`/some other compiler that can link object files. Not required to run but is required to embed files.
 
-\- `ld` (GNU Linker) - required to turn files into object files. Other linkers are not yet supported. You can install `ld` by installing the MinGW compiler suite.
-
-\- `g++`/`gcc`/`clang`/some other compiler that can link object files. Not required to run but is required to embed files.
-
-
-
-\## Usage
+## Usage
 
 Obtain the `archive` executable (which may be downloaded from the Releases tab if your on Windows) and specify all the resource files you may want to embed, 8
 
