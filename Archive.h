@@ -14,7 +14,7 @@ namespace Quasi {
 
     public:
         static Archive New(u8* data, usize size, HashMap<String, zRange> items);
-        static Archive FromPtrs(const char* const startEndPairs[], const char* names[], usize numArgs);
+        static Archive FromPtrs(const char* const startEndPairs[], const char* const names[], usize numArgs);
 
         Bytes GetBytes() const;
         Option<Bytes> Get(Str resName) const;

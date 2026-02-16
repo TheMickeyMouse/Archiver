@@ -79,18 +79,17 @@ int main(int argc, char* argv[]) {
 
     struct File {
         FILE* f = nullptr;
-        ~File() { if (f) std::fclose(f); }
-    } file = { buildIncludeFile ? std::fopen(buildIncludeFile->Data(), "w") : nullptr };
+        ~File() {
+            if (f)
+                std::fclose(f);
+        }
+    } file = {
+        buildIncludeFile ? std::fopen(buildIncludeFile->Data(), "w") : nullptr
+    };
 
-    const wchar_t* wcurPath = std::filesystem::current_path().c_str();
-    std::mbstate_t state = std::mbstate_t();
-    size_t len = std::wcsrtombs(nullptr, &wcurPath, 0, &state);
-    String curPath = String::WithCap(len);
-    curPath.Resize(len);
-    std::wcsrtombs(curPath.Data(), &wcurPath, len, &state);
+    const auto curPath = std::filesystem::current_path().u8string();
+    Str curPathStr = Str::Slice((const char*)curPath.data(), curPath.size());
 
-    Debug::QInfo$("Running from {}, len = {}", curPath, len);
-
-    Archive::ArchiveFiles(args, resourceDir, curPath, *outputFile,
+    Archive::ArchiveFiles(args, resourceDir, curPathStr, *outputFile,
         buildIncludeFile ? Text::StringWriter::WriteToFile(file.f) : Text::StringWriter::WriteToConsole());
 }

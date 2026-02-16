@@ -13,13 +13,13 @@ target_include_directories(archive PUBLIC ${CMAKE_SOURCE_DIR}/Quasi/src)
 
 if (MSVC)
     target_compile_options(archive PRIVATE
-            "$<$<CONFIG:Release>:/O3>"
-            "$<$<CONFIG:Release>:-DNDEBUG>"
+            "$<IF:$<CONFIG:Release>,/O3,>"
+            "$<IF:$<CONFIG:Release>,-DNDEBUG,>"
     )
 else()
     target_compile_options(archive PRIVATE
-        "$<$<CONFIG:Release>:-O3>"
-        "$<$<CONFIG:Release>:-DNDEBUG>"
-        "$<$<CONFIG:Release>:-s>"
+        "$<IF:$<CONFIG:Release>,-O3,>"
+        "$<IF:$<CONFIG:Release>,-DNDEBUG,>"
+        "$<IF:$<CONFIG:Release>,-s,>"
     )
 endif()
